@@ -1,4 +1,37 @@
 {
-  "descripcion": "Manifiesto de modelos de Jarvis-son V1. No se versionan los pesos, solo su origen.",
-  "modelos": []
+  "version": 1,
+  "nota": "Los pesos no se versionan en Git. Descargar desde la URL y verificar el SHA-256.",
+  "modelos": [
+    {
+      "id": "stt",
+      "nombre": "Whisper tiny (multilingüe)",
+      "archivo": "ggml-tiny.bin",
+      "formato": "ggml",
+      "origen": "https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-tiny.bin",
+      "licencia": "MIT",
+      "tamano_bytes": 77691713,
+      "sha256": "be07e048e1e599ad46341c8d2a135645097a538221678b7acdd1b1919c6e1b21"
+    },
+    {
+      "id": "slm",
+      "nombre": "Qwen3.5-0.8B",
+      "archivo": "Qwen3.5-0.8B-Q4_0.gguf",
+      "formato": "GGUF",
+      "cuantizacion": "Q4_0",
+      "origen": "https://huggingface.co/ggml-org/Qwen3.5-0.8B-GGUF/resolve/main/Qwen3.5-0.8B-Q4_0.gguf",
+      "licencia": "VERIFICAR en la página del modelo (Apache-2.0 en familias Qwen previas)",
+      "tamano_bytes": 563036064,
+      "sha256": "57d1997790d1744fba5b40a7317df71ea5e2acee28c47e78f0cce39c0703f8cf"
+    },
+    {
+      "id": "tts",
+      "nombre": "MMS TTS español (VITS, sherpa-onnx)",
+      "archivo": "vits-mms-spa/model.onnx",
+      "formato": "ONNX",
+      "origen": "COMPLETAR: URL exacta de donde bajaste vits-mms-spa",
+      "licencia": "CC-BY-NC-4.0 (no comercial; verificar en la ficha del modelo)",
+      "tamano_bytes": 114022324,
+      "sha256": "0d8c4ae3d046c87d9dc973d654d5b14393d8000c37ac9ce11e1ce8cfb8ba75d5"
+    }
+  ]
 }
