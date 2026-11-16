@@ -19,21 +19,19 @@
       "formato": "GGUF",
       "cuantizacion": "Q4_0",
       "origen": "https://huggingface.co/ggml-org/Qwen3.5-0.8B-GGUF/resolve/main/Qwen3.5-0.8B-Q4_0.gguf",
-      "licencia": "VERIFICAR en la página del modelo (Apache-2.0 en familias Qwen previas)",
+      "licencia": "Apache-2.0",
       "tamano_bytes": 563036064,
       "sha256": "57d1997790d1744fba5b40a7317df71ea5e2acee28c47e78f0cce39c0703f8cf"
     },
     {
       "id": "tts",
-      "nombre": "MMS TTS español (VITS, sherpa-onnx)",
+      "nombre": "MMS TTS español (Meta, convertido a sherpa-onnx)",
       "archivo": "vits-mms-spa/model.onnx",
       "formato": "ONNX",
-      "origen": "COMPLETAR: URL exacta de donde bajaste vits-mms-spa",
-      "licencia": "CC-BY-NC-4.0 (no comercial; verificar en la ficha del modelo)",
+      "origen": "https://github.com/k2-fsa/sherpa-onnx/releases/tag/tts-models",
+      "licencia": "CC-BY-NC-4.0",
       "tamano_bytes": 114022324,
       "sha256": "0d8c4ae3d046c87d9dc973d654d5b14393d8000c37ac9ce11e1ce8cfb8ba75d5"
     }
   ]
 }
-
-
