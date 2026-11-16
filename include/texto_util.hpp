@@ -34,16 +34,20 @@ inline bool transcripcion_utilizable(const std::string& texto) {
 // Quita del inicio de la salida del SLM los marcadores que imprime llama-cli
 // y todo lo que viene despues de "Exiting..." o "[ Prompt:".
 inline std::string limpiar_salida_slm(const std::string& raw) {
+
     std::string s = raw;
-    size_t fin = s.find("[ Prompt");
-    if (fin != std::string::npos) s.erase(fin);
-    fin = s.find("Exiting...");
-    if (fin != std::string::npos) s.erase(fin);
-    // salto de linea -> espacio
+    for (const char* marca : {"[ Prompt", "Exiting...", "[end of text]"}) {
+        size_t fin = s.find(marca);
+
+        if (fin != std::string::npos) s.erase(fin);
+    }
     for (auto& ch : s) if (ch == '\n' || ch == '\r') ch = ' ';
     s = recortar(s);
-    // algunos builds anteponen "> " como marcador de turno
     if (s.rfind("> ", 0) == 0) s = recortar(s.substr(2));
+    // llama-completion puede continuar el prompt con signos sueltos al inicio
+    while (!s.empty() && (s[0] == '?' || s[0] == '.' || s[0] == ',' || s[0] == ':')) {
+        s = recortar(s.substr(1));
+    }
     return s;
 }
 

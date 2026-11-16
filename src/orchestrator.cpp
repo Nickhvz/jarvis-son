@@ -186,6 +186,12 @@ MetricasTurno ejecutar_turno(const ConfigRutas& cfg) {
     t1 = Clock::now();
     m.ms_slm = std::chrono::duration_cast<std::chrono::milliseconds>(t1 - t0).count();
 
+    {
+        // Descartar banner y eco: quedarse solo con lo que va despues del prompt
+        size_t pos = out.find(prompt);
+        if (pos != std::string::npos) out = out.substr(pos + prompt.size());
+
+    }
     std::string respuesta = jarvis::limpiar_salida_slm(out);
     if (rc != 0 || respuesta.empty()) {
         mostrar_estado(Estado::ERROR);
