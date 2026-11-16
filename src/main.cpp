@@ -38,6 +38,8 @@ int main(int argc, char* argv[]) {
                       << "SLM: " << res.ms_slm << " ms | "
                       << "TTS: " << res.ms_tts << " ms | "
                       << "Total: " << res.ms_total << " ms" << std::endl;
+        } else if (res.etapa_error == "STT (sin voz utilizable)") {
+            std::cout << "[INFO] No se detecto voz. Habla mas cerca del microfono e intenta de nuevo." << std::endl;
         } else {
             std::cerr << "[FALLO] Etapa: " << res.etapa_error
                       << " | Codigo salida: " << res.codigo_salida << std::endl;

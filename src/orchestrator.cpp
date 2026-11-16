@@ -1,4 +1,5 @@
 #include "orchestrator.hpp"
+#include "texto_util.hpp"
 #include <iostream>
 #include <vector>
 #include <chrono>
@@ -96,20 +97,14 @@ static int ejecutar_proceso(const std::vector<std::string>& args, std::string& s
 
     int status = 0;
     waitpid(pid, &status, 0);
+    if (std::getenv("JARVIS_DEBUG")) {
+        std::cerr << "[DEBUG] " << args[0] << " -> WIFEXITED=" << WIFEXITED(status)
+                  << " WEXITSTATUS=" << (WIFEXITED(status) ? WEXITSTATUS(status) : -1)
+                  << " WIFSIGNALED=" << WIFSIGNALED(status)
+                  << " bytes_stdout=" << salida_stdout.size() << std::endl;
+    }
     if (WIFEXITED(status)) return WEXITSTATUS(status);
     return -1;
-}
-
-static std::string extraer_respuesta_slm(const std::string& raw, const std::string& prompt) {
-    size_t pos_prompt = raw.find(prompt);
-    size_t inicio = (pos_prompt != std::string::npos) ? pos_prompt + prompt.size() : 0;
-
-    size_t fin = raw.find("[ Prompt", inicio);
-    if (fin == std::string::npos) fin = raw.find("Exiting...", inicio);
-    if (fin == std::string::npos) fin = raw.size();
-
-    std::string sub = raw.substr(inicio, fin - inicio);
-    return limpiar_espacios(sub);
 }
 
 MetricasTurno ejecutar_turno(const ConfigRutas& cfg) {
@@ -146,17 +141,27 @@ MetricasTurno ejecutar_turno(const ConfigRutas& cfg) {
         "-f", cfg.audio_entrada_tmp,
         "-l", "es",
         "-nt",
+        "-sns",
         "-mc", "0"
     }, out, true);
     t1 = Clock::now();
     m.ms_stt = std::chrono::duration_cast<std::chrono::milliseconds>(t1 - t0).count();
 
     std::string transcripcion = limpiar_espacios(out);
-    if (rc != 0 || transcripcion.empty()) {
+    if (rc != 0) {
         mostrar_estado(Estado::ERROR);
-        m.etapa_error = "STT (sin texto o fallo binario)";
-        m.codigo_salida = (rc != 0) ? rc : 2;
+        m.etapa_error = "STT (fallo del binario whisper-cli)";
+        m.codigo_salida = rc;
         limpiar_temporales(cfg);
+        return m;
+    }
+    if (!jarvis::transcripcion_utilizable(transcripcion)) {
+        // Silencio, ruido o etiqueta tipo [MÚSICA]: no es una pregunta.
+        std::cout << "[STT] No te escuche (" << transcripcion << "). Intenta de nuevo." << std::endl;
+        limpiar_temporales(cfg);
+        m.etapa_error = "STT (sin voz utilizable)";
+        m.codigo_salida = 2;
+        mostrar_estado(Estado::LISTO);
         return m;
     }
     std::cout << "[STT] Transcripcion detectada (" << m.ms_stt << " ms)" << std::endl;
@@ -173,12 +178,15 @@ MetricasTurno ejecutar_turno(const ConfigRutas& cfg) {
         "-t", "4",
         "-st",
         "-rea", "off",
+        "--simple-io",
+        "--no-display-prompt",
+        "--log-disable",
         "-p", prompt
     }, out, true);
     t1 = Clock::now();
     m.ms_slm = std::chrono::duration_cast<std::chrono::milliseconds>(t1 - t0).count();
 
-    std::string respuesta = extraer_respuesta_slm(out, prompt);
+    std::string respuesta = jarvis::limpiar_salida_slm(out);
     if (rc != 0 || respuesta.empty()) {
         mostrar_estado(Estado::ERROR);
         m.etapa_error = "SLM (respuesta vacia o fallo llama-cli)";
