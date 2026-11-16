@@ -1,0 +1,20 @@
+Hola, ¿cómo estás?
+¿Qué hora es?
+Cuéntame un chiste corto.
+Quiero saber el clima de hoy.
+Cuál es la capital de Colombia.
+Explícame qué es una red neuronal.
+Dime tres frutas tropicales.
+Cuánto es dos más dos.
+Recomiéndame una canción tranquila.
+Cómo se dice gracias en inglés.
+¿Qué día es hoy?
+Resume en una frase qué es la inteligencia artificial.
+Dame un consejo para estudiar mejor.
+Cuál es el río más largo del mundo.
+Cuántos días tiene una semana.
+Cuéntame algo interesante sobre el espacio.
+Cómo preparo un café con leche.
+Dime un número entre uno y diez.
+Qué significa la palabra algoritmo.
+Gracias, hasta luego.
