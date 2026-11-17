@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "nota": "Los pesos no se versionan en Git. Descargar desde la URL y verificar el SHA-256.",
+  "nota": "Los pesos no se versionan en Git. Descargar desde el origen y verificar el SHA-256.",
   "modelos": [
     {
       "id": "stt",
@@ -11,6 +11,16 @@
       "licencia": "MIT",
       "tamano_bytes": 77691713,
       "sha256": "be07e048e1e599ad46341c8d2a135645097a538221678b7acdd1b1919c6e1b21"
+    },
+    {
+      "id": "stt-alt",
+      "nombre": "Whisper base (multilingüe)",
+      "archivo": "ggml-base.bin",
+      "formato": "ggml",
+      "origen": "https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-base.bin",
+      "licencia": "MIT",
+      "tamano_bytes": 147951465,
+      "sha256": "60ed5bc3dd14eea856493d334349b405782ddcaf0028d4b5df4088345fba2efe"
     },
     {
       "id": "slm",
@@ -25,7 +35,7 @@
     },
     {
       "id": "tts",
-      "nombre": "MMS TTS español (Meta, convertido a sherpa-onnx)",
+      "nombre": "MMS TTS español (VITS, sherpa-onnx)",
       "archivo": "vits-mms-spa/model.onnx",
       "formato": "ONNX",
       "origen": "https://github.com/k2-fsa/sherpa-onnx/releases/tag/tts-models",
