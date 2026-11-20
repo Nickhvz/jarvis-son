@@ -55,3 +55,14 @@ Memoria máxima observada: 695.964 KB (~680 MiB), medida en un turno aparte. 12 
 ## Pruebas
 - Percentiles: `python3 scripts/calcular_percentiles.py turnos.log`
 - STT: `scripts/evaluar_stt.sh`
+
+- ## Si no suena el audio
+
+1. Sube el volumen **multimedia** del teléfono (no el de timbre).
+2. Desconecta audífonos y Bluetooth.
+3. Prueba el reproductor solo: `termux-media-player play ~/prueba.wav`
+4. Si no suena, corta cualquier reproducción activa: `termux-media-player stop`
+5. Prueba la voz sola: `python3 ~/tts_mms.py "Hola, esto es una prueba." ~/voz.wav` y luego `termux-media-player play ~/voz.wav`
+6. Si la voz funciona pero el programa no suena, ejecútalo con `JARVIS_DEBUG=1 ./jarvis-son` y revisa las líneas `[DEBUG]`.
+
+Nota: `termux-media-player` solo confirma que arrancó ("Now playing"). No garantiza que el audio se escuche.
