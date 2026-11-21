@@ -168,13 +168,13 @@ MetricasTurno ejecutar_turno(const ConfigRutas& cfg) {
 
     // 3. SLM (llama.cpp + Qwen3.5-0.8B)
     mostrar_estado(Estado::GENERANDO);
-    std::string prompt = "Responde en español en una frase corta: " + transcripcion;
+    std::string prompt = "Responde en español en máximo 15 palabras: " + transcripcion;
     t0 = Clock::now();
     rc = ejecutar_proceso({
         cfg.bin_llama,
         "-m", cfg.modelo_slm,
         "-c", "1024",
-        "-n", "96",
+        "-n", "64",
         "-t", "4",
         "-st",
         "-rea", "off",
