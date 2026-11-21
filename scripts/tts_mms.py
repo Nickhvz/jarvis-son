@@ -12,7 +12,7 @@ config = sherpa_onnx.OfflineTtsConfig(
             model=f"{BASE}/model.onnx",
             tokens=f"{BASE}/tokens.txt",
         ),
-        num_threads=2,
+        num_threads=4,
         provider="cpu",
     ),
     max_num_sentences=1,
